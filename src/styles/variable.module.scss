@@ -9,7 +9,7 @@ $container-margin-left: 50px;
 $default-font: "Lato", Arial, Helvetica, sans-serif;
 
 $CONSTANTS: (
-  "PUBLIC_IMAGES": "../../public/images",
+  "PUBLIC_IMAGES": "/public/images",
 );
 
 @function const($name) {
