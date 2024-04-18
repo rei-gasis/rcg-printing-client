@@ -1,5 +1,5 @@
-const PUBLIC_IMAGES_PRODUCT = "/public/images/products/";
-const PUBLIC_IMAGES = "/public/images/";
+const PUBLIC_IMAGES_PRODUCT = "/images/products/";
+const PUBLIC_IMAGES = "/images/";
 const CONTACT_INFO = {
   emailAddress: "rcgprinting@gmail.com",
   phoneNumber: "(02) 87350236",

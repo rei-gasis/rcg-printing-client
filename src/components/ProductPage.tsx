@@ -386,11 +386,7 @@ const ProductPage = () => {
             }}
           >
             <h1>How it was made</h1>
-            <img
-              style={{ width: "100%" }}
-              alt=""
-              src="../public/images/how_1.jpg"
-            ></img>
+            <img style={{ width: "100%" }} alt="" src="/images/how_1.jpg"></img>
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi
               asperiores, quod quia commodi modi odit sint aspernatur possimus?
