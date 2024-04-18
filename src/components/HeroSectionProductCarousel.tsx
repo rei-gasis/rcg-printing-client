@@ -1,3 +1,4 @@
+import { PUBLIC_IMAGES } from "../constants/constants";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
@@ -60,13 +61,13 @@ const HeroSectionProductCarousel = () => {
       animationHandler={fadeAnimationHandler}
     >
       <div>
-        <img src={"public/images/hero/1.png"} />
+        <img src={`${PUBLIC_IMAGES}hero/1.png`} />
       </div>
       <div>
-        <img src={"public/images/hero/2.png"} />
+        <img src={`${PUBLIC_IMAGES}hero/2.png`} />
       </div>
       <div>
-        <img src={"public/images/hero/3.png"} />
+        <img src={`${PUBLIC_IMAGES}hero/3.png`} />
       </div>
     </Carousel>
   );
