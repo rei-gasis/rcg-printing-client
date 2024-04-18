@@ -87,7 +87,7 @@ const ProductPage = () => {
     fbName: "",
     contactNumber: "",
     emailAddress: "",
-    dueDate: dayjs.Dayjs,
+    dueDate: dayjs(),
     description: "",
     attachment: "",
   });

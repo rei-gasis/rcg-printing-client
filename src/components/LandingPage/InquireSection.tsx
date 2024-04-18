@@ -2,14 +2,10 @@
 import { useEffect, useState } from "react";
 import "@Styles/ProductPage.scss";
 import {
-  Box,
   Button,
   Divider,
   FormLabel,
   Grid,
-  Link,
-  Rating,
-  Slider,
   Stack,
   TextField,
 } from "@mui/material";
@@ -18,7 +14,7 @@ import { Form, Formik } from "formik";
 import { simpleDateFormat } from "../../utils/dateUtil";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { Textarea } from "@mui/joy";
 import { productReqValidation } from "../../validation/validation";
 import ErrorText from "../ErrorText";
@@ -29,7 +25,7 @@ const InquireSection = () => {
     customerName: "",
     contactNumber: "",
     emailAddress: "",
-    dueDate: dayjs.Dayjs,
+    dueDate: dayjs(),
     description: "",
     attachment: "",
   });

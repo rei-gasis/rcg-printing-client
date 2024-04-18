@@ -1,8 +1,8 @@
-import { Avatar, Button, Grid, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import Image from "./library/Image";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { CONTACT_INFO } from "../constants/constants";
 
