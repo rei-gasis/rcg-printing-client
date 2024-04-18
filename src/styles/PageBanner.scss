@@ -1,0 +1,32 @@
+@import "../styles/variable.module.scss";
+
+.banner {
+  position: relative;
+  background-image: url(const("PUBLIC_IMAGES") + "/page-banner.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: rgba($color: $primary-color, $alpha: 0.8);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &-container {
+    position: relative;
+    z-index: 1;
+    color: white;
+    margin: 2rem;
+
+    & > nav {
+      color: inherit;
+      text-decoration: none;
+      padding-bottom: 2rem;
+    }
+  }
+}

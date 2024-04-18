@@ -1,0 +1,158 @@
+@import "../styles/variable.module.scss";
+
+.section {
+  min-height: 100vh;
+  height: 100vh;
+  & > .hero-section {
+    min-height: 120vh;
+    height: 120vh;
+    color: white;
+    position: relative;
+    margin-top: -30vh;
+    height: inherit;
+
+    .hero-section-container {
+      position: absolute;
+      top: 350px;
+      left: 0;
+      width: 100%;
+      max-width: $breakpoint-lg;
+
+      z-index: 99;
+      background-color: transparent;
+      display: flex;
+      flex-wrap: wrap;
+
+      justify-content: flex-start;
+
+      &-social-links {
+        margin-left: 20px;
+        flex: 0.25;
+      }
+
+      &-title {
+        font-size: 1em;
+        flex: 2;
+
+        & .caption {
+          &-1 {
+            margin-top: 0;
+            margin-bottom: 2px;
+            font-size: 1.5rem;
+            font-weight: 500;
+          }
+
+          &-main {
+            font-size: 3.25rem;
+            line-height: 1;
+            margin: 5px 0;
+          }
+
+          &-2 {
+            font-size: 1rem;
+            margin: 1rem 0;
+            font-weight: 500;
+          }
+        }
+
+        & > .searchbar {
+          position: relative;
+          width: 80%;
+
+          & .MuiTextField-root {
+            width: 70%;
+          }
+
+          & > button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            border: none;
+            color: white;
+            background-color: black;
+
+            &:hover {
+              background-color: $primary-color;
+              color: white;
+              cursor: pointer;
+            }
+          }
+        }
+
+        & > .search-list {
+          width: 25%;
+          position: absolute;
+          background-color: white;
+          color: black;
+          z-index: 999;
+        }
+
+        & > .short-company-info {
+          width: 80%;
+          display: flex;
+
+          & > * {
+            margin-right: 2rem;
+          }
+
+          & > p {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+
+      &-product-carousel {
+        flex: 2;
+      }
+    }
+
+    > .hero-section-bg {
+      z-index: -1;
+      &::after {
+        content: "";
+        position: absolute;
+        background: rgba($color: $primary-color, $alpha: 0.8);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      & > video {
+        object-fit: cover;
+        height: 120vh;
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .section {
+    & > .hero-section {
+      .hero-section-container {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 500px;
+        &-social-links {
+          display: none;
+        }
+
+        &-title {
+          margin-left: 50px;
+          flex: 1;
+          flex-basis: 50%;
+        }
+
+        &-product-carousel {
+          flex: 1;
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+}

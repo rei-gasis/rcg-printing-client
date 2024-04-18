@@ -1,0 +1,83 @@
+@import "../styles/variable.module.scss";
+
+header {
+  z-index: 9999;
+  position: relative;
+  & .top-block {
+    display: flex;
+    padding: 0.5rem 30px;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    min-height: 30px;
+    max-height: 30px;
+
+    &-contact {
+      a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &-caption {
+      & > a {
+        &:hover {
+          transition: ease-in 0.2s;
+          color: rgba($color: $secondary-color, $alpha: 0.9);
+          text-decoration: underline;
+        }
+      }
+    }
+
+    & > .blk-3 {
+      color: black;
+    }
+  }
+
+  & > nav {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: 700;
+
+    & > .nav-brand {
+      width: 30%;
+      font-size: 1.2rem;
+
+      & > a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        & > img {
+          height: 50px;
+          width: 75px;
+        }
+      }
+    }
+
+    & > .nav-links {
+      width: 30%;
+      display: flex;
+      justify-content: space-between;
+      min-width: 500px;
+
+      & a {
+        color: white;
+
+        &:hover {
+          transition: ease-in 0.3s;
+          color: rgba($color: $secondary-color, $alpha: 0.9);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

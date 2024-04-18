@@ -1,0 +1,23 @@
+$primary-color: #9e2b25;
+$secondary-color: #fff8f0;
+$tertiary-color: #f5f8de;
+
+$breakpoint-sm: 480px; //cp
+$breakpoint-md: 768px; //tablet
+$breakpoint-lg: 1333px; //normal screen
+$container-margin-left: 50px;
+$default-font: "Lato", Arial, Helvetica, sans-serif;
+
+$CONSTANTS: (
+  "PUBLIC_IMAGES": "../../public/images",
+);
+
+@function const($name) {
+  @if not map-has-key($CONSTANTS, $name) {
+    @error 'Unknown constant `#{$name}`.';
+  }
+
+  @return map-get($CONSTANTS, $name);
+}
+
+$h1-size: 3.25rem;
