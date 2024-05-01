@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import { products as _products } from "../constants/productlist";
 import { uniqBy } from "lodash";
 import { Product } from "models/Product";
-import SearchInputProduct from "./SearchInputProduct";
-import SearchInputProductList from "./SearchInputProductList";
+import SearchInputProduct from "./LandingPage/SearchInputProduct";
+import SearchInputProductList from "./LandingPage/SearchInputProductList";
 import HeroSectionProductCarousel from "./HeroSectionProductCarousel";
 import { Category } from "models/Category";
 import tiktok_logo from "../../public/images/tiktok-circle.svg";
+import IconTextStack from "./library/IconTextStack";
 
 const HeroSection = () => {
   const [searchProduct, setSearchProduct] = useState<Product>({
@@ -55,7 +56,6 @@ const HeroSection = () => {
 
   return (
     <div className="section">
-      <Navbar />
       <div className="hero-section">
         <div className="hero-section-bg">
           <video width="100%" loop={true} height="100%" autoPlay muted>
@@ -86,8 +86,7 @@ const HeroSection = () => {
             <h4 className="caption-1">DIGITAL PRINTING SERVICE</h4>
             <h1 className="caption-main">Your One-Stop Printing Shop</h1>
             <h6 className="caption-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Exercitationem nihil similique possimus nisi illo voluptatem eos
+              Direct Manufacturer of High Quality Awards
             </h6>
             <div className="searchbar">
               <SearchInputProduct
@@ -107,15 +106,11 @@ const HeroSection = () => {
               showList={products?.length > 0}
             />
             <p className="short-company-info">
-              <p>
-                <TocIcon />
-
-                <span>&nbsp; Over 40+ Products</span>
-              </p>
-              <p>
-                <AssuredWorkloadIcon />
-                <span>&nbsp;30+ Years in Service</span>
-              </p>
+              <IconTextStack icon={<TocIcon />} text="Over 100+ Products" />
+              <IconTextStack
+                icon={<AssuredWorkloadIcon />}
+                text="Industry Pioneer with 40+ years experience"
+              />
             </p>
           </div>
           <div className="hero-section-container-product-carousel">

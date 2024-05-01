@@ -1,7 +1,7 @@
 @import "../styles/variable.module.scss";
 
 header {
-  z-index: 9999;
+  z-index: 500;
   position: relative;
   & .top-block {
     display: flex;

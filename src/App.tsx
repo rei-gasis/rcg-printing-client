@@ -4,12 +4,17 @@ import { useRoutes } from "react-router-dom";
 import LandingPage from "@Components/LandingPage";
 import ProductPage from "@Components/ProductPage";
 import NotFound from "@Components/NotFound";
+import Wrapper from "@Components/Wrapper";
 
 function App() {
   const Routes = useRoutes([
     {
       path: "/",
-      element: <LandingPage />,
+      element: (
+        <Wrapper>
+          <LandingPage />
+        </Wrapper>
+      ),
     },
     {
       path: "/product/:productUrl",

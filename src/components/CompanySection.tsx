@@ -5,13 +5,16 @@ import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { CONTACT_INFO } from "../constants/constants";
+import useMediaQueryWrapper from "../hooks/useMediaQueryWrapper";
 
 const CompanySection = () => {
+  const { isPhoneSize } = useMediaQueryWrapper();
+
   return (
     <div id="our-company" className="section">
       <div className="our-company-container">
         <Grid container spacing={3}>
-          <Grid item xs={7} className="left-pane">
+          <Grid item xs={12} md={7} lg={7} className="left-pane">
             <h1>Our Company</h1>
             <p>
               RCG is a family-owned printing shop that started as a single stall
@@ -33,8 +36,8 @@ const CompanySection = () => {
             </Button>
             <Stack
               spacing={5}
-              direction="row"
-              alignItems="center"
+              direction={isPhoneSize ? "column" : "row"}
+              alignItems={isPhoneSize ? "flex-start" : "center"}
               justifyContent="flex-start"
             >
               <Stack
@@ -67,7 +70,7 @@ const CompanySection = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5} lg={5}>
             <div className="image-container">
               <Image
                 style={{

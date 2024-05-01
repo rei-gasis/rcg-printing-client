@@ -1,7 +1,7 @@
 @import "../styles/variable.module.scss";
 
 header {
-  z-index: 9999;
+  z-index: 999;
   position: relative;
   & .top-block {
     display: flex;
@@ -31,9 +31,9 @@ header {
       }
     }
 
-    & > .blk-3 {
-      color: black;
-    }
+    // & > .blk-3 {
+    //   color: black;
+    // }
   }
 
   & > nav {
@@ -51,6 +51,7 @@ header {
     & > .nav-brand {
       width: 30%;
       font-size: 1.2rem;
+      flex: 1 0 auto;
 
       & > a {
         display: flex;
@@ -59,6 +60,9 @@ header {
         & > img {
           height: 50px;
           width: 75px;
+        }
+        & > span {
+          font-size: clamp(0.75rem, 0.25rem + 1.6vw, 1.25rem);
         }
       }
     }
@@ -76,6 +80,22 @@ header {
           transition: ease-in 0.3s;
           color: rgba($color: $secondary-color, $alpha: 0.9);
           text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  header {
+    & .top-block {
+      &-caption {
+        & > a {
+          &:hover {
+            transition: ease-in 0.2s;
+            color: rgba($color: $secondary-color, $alpha: 0.9);
+            text-decoration: underline;
+          }
         }
       }
     }

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { products as _products } from "../constants/productlist";
 import PageBanner from "./PageBanner";
 import { Product } from "models/Product";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "@Styles/ProductPage.scss";
 import {
   Accordion,
@@ -14,6 +14,7 @@ import {
   FormLabel,
   Grid,
   Link,
+  Popover,
   Rating,
   Slider,
   Stack,
@@ -31,6 +32,7 @@ import { Textarea } from "@mui/joy";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { faqs } from "../constants/faqs";
 import { productReqValidation } from "../validation/validation";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 
 import ErrorText from "./ErrorText";
 
@@ -112,6 +114,20 @@ const ProductPage = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
   const { min, step, max } = priceSliderValues();
+
+  const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
+  const handlePopOverHover = (event: React.MouseEvent<SVGSVGElement>) => {
+    console.log(event);
+
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopOverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const popOverId = open ? "simple-popover" : undefined;
 
   return (
     <div className="product-page">
@@ -211,8 +227,27 @@ const ProductPage = () => {
                       <b>Quantity:</b> {values.qty}
                       {plusVal}
                     </p>
-                    <p>Php {price}/pc</p>
+                    <p>
+                      Php {price}/pc
+                      <InfoRoundedIcon onMouseEnter={handlePopOverHover} />
+                    </p>
                   </div>
+                  <Popover
+                    id={popOverId}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handlePopOverClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                  >
+                    Price based on reference size
+                  </Popover>
 
                   <Slider
                     id="qty"
@@ -315,7 +350,7 @@ const ProductPage = () => {
                       minRows={3}
                       size="md"
                       variant="outlined"
-                      placeholder="Describe your request/customization"
+                      placeholder="Enter desired size (ex. 5x11 in) and additional requests"
                       value={values.description}
                       onChange={handleChange}
                       // sx={{ //TODO: apply font placeholder textarea
