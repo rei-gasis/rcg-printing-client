@@ -1,5 +1,5 @@
 // import { products as _products } from "../constants/productlist";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "@Styles/ProductPage.scss";
 import {
   Button,
@@ -19,20 +19,32 @@ import { Textarea } from "@mui/joy";
 import { productReqValidation } from "../../validation/validation";
 import ErrorText from "../ErrorText";
 import Image from "@Components/library/Image";
+import { Quote } from "../../services/api";
+import { Bounce, toast } from "react-toastify";
+import AppContext from "../../context/AppContext";
+import { toastSuccess, toastFailed } from "../../utils/toast";
 
-const InquireSection = () => {
+const InquireSection = (props: any) => {
+  const { setLoading } = useContext(AppContext);
   const [initialValues, setInitialValues] = useState({
+    // customerName: "Winson",
+    // contactNumber: "09665828870",
+    // emailAddress: "rei.gasis@gmail.com",
+    // dueDate: simpleDateFormat(dayjs()),
+    // description: "desc",
+    // attachment: "",
+
     customerName: "",
     contactNumber: "",
     emailAddress: "",
-    dueDate: dayjs(),
+    dueDate: simpleDateFormat(dayjs()),
     description: "",
     attachment: "",
   });
   return (
     <div className="section" id="inquire-section">
       <Grid container spacing={3} className="inquire-section-container">
-        <Grid item xs={5} className="image">
+        <Grid item lg={5} md={6} xs={12} sm={6} className="image">
           <Image
             fileName="customer-quotation.jpg"
             style={{
@@ -59,19 +71,44 @@ const InquireSection = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={7} className="form">
+        <Grid item lg={7} md={6} xs={12} sm={6} className="form">
           <h1 className="header-bg">INQUIRY</h1>
           <h1>Contact Us for any printing services you need!</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem,
             voluptatum. Obcaecati ipsam
+            {/* {ctx.toastString} */}
           </p>
           <Formik
             initialValues={initialValues}
             validationSchema={productReqValidation}
             enableReinitialize
-            onSubmit={async (data) => {
-              alert(data);
+            onSubmit={async (data, actions) => {
+              console.log(data);
+
+              setLoading(true);
+
+              await Quote.create({
+                contactNo: data.contactNumber,
+                customerName: data.customerName,
+                description: data.description,
+                dueDate: data.dueDate,
+                emailAddress: data.emailAddress,
+                attachment: data.attachment,
+              })
+                .then((response) => {
+                  console.log(response);
+
+                  toastSuccess("Successfully submitted!");
+                })
+                .catch((err) => {
+                  toastFailed("Failed Submission!");
+                  console.log(err);
+                })
+                .finally(() => {
+                  setLoading(false);
+                  actions.resetForm();
+                });
             }}
           >
             {({ values, touched, errors, setFieldValue, handleChange }) => (
@@ -98,7 +135,7 @@ const InquireSection = () => {
                       }}
                     />
 
-                    {!touched.customerName && (
+                    {(!touched.customerName || errors.customerName) && (
                       <ErrorText text={errors.customerName} color="white" />
                     )}
                   </Grid>
@@ -121,7 +158,7 @@ const InquireSection = () => {
                           },
                       }}
                     />
-                    {!touched.contactNumber && (
+                    {(!touched.contactNumber || errors.contactNumber) && (
                       <ErrorText text={errors.contactNumber} color="white" />
                     )}
                   </Grid>
@@ -145,7 +182,7 @@ const InquireSection = () => {
                           },
                       }}
                     />
-                    {!touched.emailAddress && (
+                    {(!touched.emailAddress || errors.emailAddress) && (
                       <ErrorText text={errors.emailAddress} color="white" />
                     )}
                   </Grid>
@@ -158,23 +195,22 @@ const InquireSection = () => {
                       Upload File
                       <input
                         type="file"
-                        hidden
                         name="attachment"
+                        hidden
+                        id="attachment"
                         onChange={(event) => {
+                          console.log(event.currentTarget.files![0]);
+
                           setFieldValue(
                             "attachment",
-                            event.currentTarget.files![0].name
+                            event.currentTarget.files![0]
                           );
                         }}
                       />
                     </Button>
                     <br />
                     <span>
-                      {" "}
-                      <FormLabel>
-                        {values.attachment ||
-                          "(attach file maximum of 5MB only) "}
-                      </FormLabel>
+                      <p>(attach file maximum of 5MB only)</p>
                     </span>
                   </Grid>
                   <Grid item xs={12}>
@@ -184,7 +220,7 @@ const InquireSection = () => {
                       minRows={3}
                       size="md"
                       variant="outlined"
-                      placeholder="Describe your request/customization"
+                      placeholder="Enter desired size (ex. 5x11 in) and additional requests"
                       value={values.description}
                       onChange={handleChange}
                       // sx={{ //TODO: apply font placeholder textarea
@@ -193,19 +229,26 @@ const InquireSection = () => {
                       //   },
                       // }}
                     />
-                    {!touched.description && (
+
+                    {(!touched.description || errors.description) && (
                       <ErrorText text={errors.description} color="white" />
                     )}
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
+                        className="inquiry-datepicker"
                         label="Due Date"
                         value={dayjs(values.dueDate)}
                         onChange={(val: any) => {
                           setFieldValue("dueDate", simpleDateFormat(val));
                         }}
                         slotProps={{
+                          layout: {
+                            sx: {
+                              backgroundColor: "black",
+                            },
+                          },
                           textField: {
                             sx: {
                               color: "#ad1457",
@@ -226,7 +269,6 @@ const InquireSection = () => {
                     </Button>
                   </Grid>
                 </Grid>
-
                 {/* <pre>{JSON.stringify(errors, null, 1)}</pre>
                 <pre>{JSON.stringify(values, null, 1)}</pre> */}
               </Form>
