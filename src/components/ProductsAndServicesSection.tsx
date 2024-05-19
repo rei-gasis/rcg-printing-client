@@ -1,11 +1,13 @@
 import { Grid, Paper, styled } from "@mui/material";
 import { PUBLIC_IMAGES } from "../constants/constants";
 import Flickity from "react-flickity-component";
+import ScrollAnimationWrapper from "./library/ScrollAnimationWrapper";
+import { ScrollAnimationProps } from "react-animate-on-scroll";
 
 const ProductsAndServicesSection = () => {
   const flickityOptions = {
     watchCSS: true,
-    initialIndex: 2,
+    initialIndex: 1,
     pageDots: false,
     adaptiveHeight: true,
     contain: true,
@@ -14,7 +16,9 @@ const ProductsAndServicesSection = () => {
   return (
     <div className="section" id="prod-serv-section">
       <div className="prod-serv-section-container">
-        <h1>Discover our Services</h1>
+        <ScrollAnimationWrapper animateIn="fadeInUp">
+          <h1>Discover our Services</h1>
+        </ScrollAnimationWrapper>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex illum
           non, eius quis eligendi repellendus nam obcaecati error sunt{" "}
@@ -27,13 +31,17 @@ const ProductsAndServicesSection = () => {
           disableImagesLoaded={false}
           reloadOnUpdate
         >
-          <div className="carousel-cell">
+          <ScrollAnimationWrapper
+            animateIn="fadeInLeft"
+            className="carousel-cell"
+          >
             <img
               width="100px"
               height="100px"
               alt=""
               src={`${PUBLIC_IMAGES}printer.svg`}
             />
+
             <h2>Digital Printing</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
@@ -44,9 +52,12 @@ const ProductsAndServicesSection = () => {
               explicabo natus, distinctio corporis mollitia undeLorem ipsum
               dolor sit amet consectetur
             </p>
-          </div>
+          </ScrollAnimationWrapper>
 
-          <div className="carousel-cell">
+          <ScrollAnimationWrapper
+            animateIn="fadeInUp"
+            className="carousel-cell"
+          >
             <img
               width="100px"
               height="100px"
@@ -60,8 +71,11 @@ const ProductsAndServicesSection = () => {
               ipsum dolor sit amet consectetur, adipisicing elit. Maxime dolor,
               explicabo natus, distinctio corpo
             </p>
-          </div>
-          <div className="carousel-cell">
+          </ScrollAnimationWrapper>
+          <ScrollAnimationWrapper
+            animateIn="fadeInRight"
+            className="carousel-cell"
+          >
             <img
               width="100px"
               height="100px"
@@ -73,7 +87,7 @@ const ProductsAndServicesSection = () => {
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
               dolor, explicabo natus, distinctio corporis mollitia unde{" "}
             </p>
-          </div>
+          </ScrollAnimationWrapper>
         </Flickity>
       </div>
     </div>

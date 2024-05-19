@@ -10,7 +10,7 @@
       "@Components/*": ["./components/*"],
       "@Styles/*": ["./styles/*"],
       "@PublicImages": ["../public/images/*"],
-      "@Constants": ["./constants/*"]
+      "@Const/*": ["./constants/*"]
     },
     "noUncheckedIndexedAccess": false,
 

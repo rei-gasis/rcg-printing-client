@@ -3,8 +3,9 @@ import "./App.css";
 import { useRoutes } from "react-router-dom";
 import LandingPage from "@Components/LandingPage";
 import ProductPage from "@Components/ProductPage";
-import NotFound from "@Components/NotFound";
 import Wrapper from "@Components/Wrapper";
+import ProductAndServicesPage from "@Components/ProductsAndServicesPage";
+import PageNotFound from "@Components/PageNotFound";
 
 function App() {
   const Routes = useRoutes([
@@ -18,11 +19,23 @@ function App() {
     },
     {
       path: "/product/:productUrl",
-      element: <ProductPage />,
+      element: (
+        <Wrapper>
+          <ProductPage />
+        </Wrapper>
+      ),
+    },
+    {
+      path: "/products-services",
+      element: (
+        <Wrapper>
+          <ProductAndServicesPage />
+        </Wrapper>
+      ),
     },
     {
       path: "*",
-      element: <NotFound />,
+      element: <PageNotFound />,
     },
   ]);
 

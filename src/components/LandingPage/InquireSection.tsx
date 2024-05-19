@@ -23,17 +23,13 @@ import { Quote } from "../../services/api";
 import { Bounce, toast } from "react-toastify";
 import AppContext from "../../context/AppContext";
 import { toastSuccess, toastFailed } from "../../utils/toast";
+import { PUBLIC_IMAGES } from "@Const/constants";
+import ScrollAnimationWrapper from "@Components/library/ScrollAnimationWrapper";
 
 const InquireSection = (props: any) => {
+  const ENABLE_DEBUG = import.meta.env.VITE_ENABLE_DEBUG;
   const { setLoading } = useContext(AppContext);
   const [initialValues, setInitialValues] = useState({
-    // customerName: "Winson",
-    // contactNumber: "09665828870",
-    // emailAddress: "rei.gasis@gmail.com",
-    // dueDate: simpleDateFormat(dayjs()),
-    // description: "desc",
-    // attachment: "",
-
     customerName: "",
     contactNumber: "",
     emailAddress: "",
@@ -46,7 +42,7 @@ const InquireSection = (props: any) => {
       <Grid container spacing={3} className="inquire-section-container">
         <Grid item lg={5} md={6} xs={12} sm={6} className="image">
           <Image
-            fileName="customer-quotation.jpg"
+            filePath={`${PUBLIC_IMAGES}customer-quotation.jpg`}
             style={{
               width: "100%",
               borderRadius: "20px",
@@ -55,25 +51,34 @@ const InquireSection = (props: any) => {
             }}
             className="main"
           />
+          <ScrollAnimationWrapper animateIn="fadeInLeft" delay={500}>
+            <Stack
+              spacing={4}
+              direction="row"
+              alignItems="center"
+              className="caption"
+            >
+              <Image
+                className="message-icon"
+                filePath={`${PUBLIC_IMAGES}message-icon.svg`}
+              />
 
-          <Stack
-            spacing={4}
-            direction="row"
-            alignItems="center"
-            className="caption"
-          >
-            <Image className="message-icon" fileName="message-icon.svg" />
-            <Stack direction="column">
-              <h4>Contact Our Sales</h4>
-              <p>
-                <b>we'll connect to you shortly</b>
-              </p>
+              <Stack direction="column">
+                <h4>Contact Our Sales</h4>
+                <p>
+                  <b>we'll connect to you shortly</b>
+                </p>
+              </Stack>
             </Stack>
-          </Stack>
+          </ScrollAnimationWrapper>
         </Grid>
         <Grid item lg={7} md={6} xs={12} sm={6} className="form">
-          <h1 className="header-bg">INQUIRY</h1>
-          <h1>Contact Us for any printing services you need!</h1>
+          <ScrollAnimationWrapper animateIn="fadeInUp">
+            <h1 className="header-bg">INQUIRY</h1>
+          </ScrollAnimationWrapper>
+          <ScrollAnimationWrapper animateIn="fadeInUp" delay={500}>
+            <h1>Contact Us for any printing services you need!</h1>
+          </ScrollAnimationWrapper>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem,
             voluptatum. Obcaecati ipsam
@@ -84,8 +89,6 @@ const InquireSection = (props: any) => {
             validationSchema={productReqValidation}
             enableReinitialize
             onSubmit={async (data, actions) => {
-              console.log(data);
-
               setLoading(true);
 
               await Quote.create({
@@ -199,8 +202,6 @@ const InquireSection = (props: any) => {
                         hidden
                         id="attachment"
                         onChange={(event) => {
-                          console.log(event.currentTarget.files![0]);
-
                           setFieldValue(
                             "attachment",
                             event.currentTarget.files![0]
@@ -223,11 +224,6 @@ const InquireSection = (props: any) => {
                       placeholder="Enter desired size (ex. 5x11 in) and additional requests"
                       value={values.description}
                       onChange={handleChange}
-                      // sx={{ //TODO: apply font placeholder textarea
-                      //   "::placeholder": {
-                      //     fontFamily: "Lato",
-                      //   },
-                      // }}
                     />
 
                     {(!touched.description || errors.description) && (
@@ -269,8 +265,12 @@ const InquireSection = (props: any) => {
                     </Button>
                   </Grid>
                 </Grid>
-                {/* <pre>{JSON.stringify(errors, null, 1)}</pre>
-                <pre>{JSON.stringify(values, null, 1)}</pre> */}
+                {ENABLE_DEBUG && (
+                  <div>
+                    <pre>{JSON.stringify(errors, null, 1)}</pre>
+                    <pre>{JSON.stringify(values, null, 1)}</pre>
+                  </div>
+                )}
               </Form>
             )}
           </Formik>

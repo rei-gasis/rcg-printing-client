@@ -15,9 +15,8 @@ type Props = {
 const PageBanner = ({ breadCrumbList, title }: Props) => {
   return (
     <div className="banner">
-      <Navbar />
       <div className="banner-container">
-        <h1>{title}</h1>
+        <h1 className="banner-container-title">{title}</h1>
         <Breadcrumbs>
           {breadCrumbList?.map((bc, idx) => {
             const last: boolean = idx === breadCrumbList.length - 1;

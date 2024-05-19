@@ -40,7 +40,7 @@ const SidebarMenu = ({ closeMenu, isOpen }: Props) => {
         <List dense={false}>
           <ListItem key="close-sidebar">
             <ListItemText>
-              <NavLink to="/" onClick={closeMenu}>
+              <NavLink to="#" onClick={closeMenu}>
                 <CloseIcon sx={{ color: "white" }} />
               </NavLink>
             </ListItemText>

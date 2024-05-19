@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { products as _products } from "../constants/productlist";
+import { categories as _products } from "@Const/categorylist";
+import { Category, Variant } from "../models/Category";
 import PageBanner from "./PageBanner";
-import { Product } from "models/Product";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "@Styles/ProductPage.scss";
 import {
   Accordion,
@@ -27,7 +27,7 @@ import { Form, Formik } from "formik";
 import { simpleDateFormat } from "../utils/dateUtil";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { Textarea } from "@mui/joy";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { faqs } from "../constants/faqs";
@@ -35,15 +35,18 @@ import { productReqValidation } from "../validation/validation";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 
 import ErrorText from "./ErrorText";
+import AppContext from "../context/AppContext";
+import { Quote } from "../services/api";
+import { toastFailed, toastSuccess } from "../utils/toast";
 
-const ProductPage = () => {
+const ProductPage2 = () => {
   const { productUrl } = useParams();
+  const { setLoading, setShowMenuLinks } = useContext(AppContext);
 
-  const [currentProduct, setCurrentProduct] = useState<Product>({
+  const [currentProduct, setCurrentProduct] = useState<Category>({
     id: "",
-    category: "",
     name: "",
-    images: [""],
+    image: "",
   });
 
   const [price, setPrice] = useState<number | undefined>(0);
@@ -84,41 +87,49 @@ const ProductPage = () => {
   const [initialValues, setInitialValues] = useState({
     productName: currentProduct.name,
     qty: 1,
-    // price: "",
     customerName: "",
     fbName: "",
     contactNumber: "",
     emailAddress: "",
-    dueDate: dayjs(),
+    dueDate: simpleDateFormat(dayjs()),
     description: "",
     attachment: "",
   });
 
   useEffect(() => {
+    setShowMenuLinks(false);
+
     const selectedProduct = _products.filter((item) => {
-      return item.url.substring(1) === productUrl;
+      return item.url?.substring(1) === productUrl;
     })[0];
 
     if (selectedProduct) {
       setCurrentProduct(selectedProduct);
       setInitialValues({ ...initialValues, productName: selectedProduct.name });
-      setProductImages(selectedProduct.images);
-      setselectedProductImage(selectedProduct.images[0]);
+      setVariants(selectedProduct?.variants);
+
+      if (selectedProduct.variants)
+        setSelectedVariant({
+          image: selectedProduct.variants[0].image,
+          type: selectedProduct.variants[0].type,
+        });
+
       if (selectedProduct.priceMatrix)
         setPrice(selectedProduct.priceMatrix[0].price);
     } else console.log("no selected"); //TODO:forward to not found page
   }, [productUrl]);
 
-  const [selectedProductImage, setselectedProductImage] = useState<string>("");
-  const [productImages, setProductImages] = useState<string[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | undefined>({
+    image: "",
+    type: "",
+  });
+  const [variants, setVariants] = useState<Variant[] | undefined>([]);
   const [fadeIn, setFadeIn] = useState(false);
 
   const { min, step, max } = priceSliderValues();
 
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const handlePopOverHover = (event: React.MouseEvent<SVGSVGElement>) => {
-    console.log(event);
-
     setAnchorEl(event.currentTarget);
   };
 
@@ -135,43 +146,41 @@ const ProductPage = () => {
         title="Shop"
         breadCrumbList={[
           { title: "Home", url: "/" },
-          { title: "Product", url: "/product" },
-          { title: currentProduct.category, url: "/plaque" },
+          { title: "Product", url: "/products-services" },
           { title: currentProduct.name, url: `/product${currentProduct.url}` },
         ]}
       />
       <Grid className="product-container" container padding={3}>
-        <Grid className="product-container-image" item xs={6}>
+        <Grid className="product-container-image" item xs={12} md={6} lg={6}>
           <Grid className="image-viewer" container spacing={1}>
             <Grid
               className={`image-viewer-current ${fadeIn ? "fadeIn" : ""}`}
               item
               xs={12}
             >
-              {currentProduct?.images && (
+              {currentProduct?.image && (
                 <img
-                  // className="fadeIn"
-                  src={`${PUBLIC_IMAGES_PRODUCT}/${selectedProductImage}`}
-                  alt={selectedProductImage}
+                  src={`${PUBLIC_IMAGES_PRODUCT}/${selectedVariant?.image}`}
+                  alt={selectedVariant?.type}
                 />
               )}
             </Grid>
-            {productImages?.map((img) => {
+            {variants?.map((img) => {
               return (
                 <Grid item xs={3}>
                   <div
-                    key={img}
+                    key={img.type}
                     className={`image-viewer-item-container ${
-                      img === selectedProductImage ? "selected" : ""
+                      img.image === selectedVariant?.image ? "selected" : ""
                     }`}
                   >
-                    {currentProduct?.images && (
+                    {currentProduct?.image && (
                       <img
                         className="image-viewer-item  "
-                        src={`${PUBLIC_IMAGES_PRODUCT}/${img}`}
-                        alt={img}
+                        src={`${PUBLIC_IMAGES_PRODUCT}/${img.image}`}
+                        alt={img.type}
                         onClick={(e) => {
-                          setselectedProductImage(img);
+                          setSelectedVariant(img);
                           setFadeIn(true);
 
                           setTimeout(() => setFadeIn(false), 900);
@@ -184,13 +193,35 @@ const ProductPage = () => {
             })}
           </Grid>
         </Grid>
-        <Grid className="product-container-form" item xs={6}>
+        <Grid className="product-container-form" item xs={12} md={6} lg={6}>
           <Formik
             initialValues={initialValues}
             validationSchema={productReqValidation}
             enableReinitialize
-            onSubmit={async (data) => {
-              alert(data);
+            onSubmit={async (data, actions) => {
+              setLoading(true);
+
+              await Quote.create({
+                contactNo: data.contactNumber,
+                customerName: data.customerName,
+                description: data.description,
+                dueDate: data.dueDate,
+                emailAddress: data.emailAddress,
+                attachment: data.attachment,
+              })
+                .then((response) => {
+                  console.log(response);
+
+                  toastSuccess("Successfully submitted!");
+                })
+                .catch((err) => {
+                  toastFailed("Failed Submission!");
+                  console.log(err);
+                })
+                .finally(() => {
+                  setLoading(false);
+                  actions.resetForm();
+                });
             }}
           >
             {({ values, touched, errors, setFieldValue, handleChange }) => (
@@ -220,6 +251,34 @@ const ProductPage = () => {
                     <b>Price Ref:</b> {currentProduct.priceSizeRef}
                   </p>
                 )}
+                <p className="variants">
+                  <b>Variants</b>:
+                </p>
+                <Stack direction="row" spacing={1}>
+                  {currentProduct.variants?.map((variant) => {
+                    return (
+                      <Button
+                        key={variant.type}
+                        type="button"
+                        color="warning"
+                        variant={`${
+                          selectedVariant?.type === variant.type
+                            ? "contained"
+                            : "outlined"
+                        }`}
+                        onClick={(e) => {
+                          setSelectedVariant(variant);
+                          setFadeIn(true);
+
+                          setTimeout(() => setFadeIn(false), 900);
+                        }}
+                      >
+                        {variant.type}
+                      </Button>
+                    );
+                  })}
+                </Stack>
+
                 <Divider variant="fullWidth" sx={{ margin: "1rem 0" }} />
                 <Box sx={{ width: 250 }}>
                   <div className="price-qty-container">
@@ -268,7 +327,7 @@ const ProductPage = () => {
 
                 <Grid container rowGap={1} spacing={2}>
                   <Divider sx={{ marginBottom: "1rem" }} />
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <TextField
                       id="customerName"
                       name="customerName"
@@ -284,7 +343,7 @@ const ProductPage = () => {
                       <ErrorText text={errors.customerName} />
                     )}
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <TextField
                       id="contactNumber"
                       name="contactNumber"
@@ -300,7 +359,7 @@ const ProductPage = () => {
                     )}
                   </Grid>
 
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <TextField
                       id="emailAddress"
                       name="emailAddress"
@@ -315,7 +374,7 @@ const ProductPage = () => {
                       <ErrorText text={errors.emailAddress} />
                     )}
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <Button
                       color="warning"
                       variant="contained"
@@ -353,17 +412,12 @@ const ProductPage = () => {
                       placeholder="Enter desired size (ex. 5x11 in) and additional requests"
                       value={values.description}
                       onChange={handleChange}
-                      // sx={{ //TODO: apply font placeholder textarea
-                      //   "::placeholder": {
-                      //     fontFamily: "Lato",
-                      //   },
-                      // }}
                     />
                     {!touched.description && (
                       <ErrorText text={errors.description} />
                     )}
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label="Due Date"
@@ -380,9 +434,6 @@ const ProductPage = () => {
                     </Button>
                   </Grid>
                 </Grid>
-
-                {/* <pre>{JSON.stringify(errors, null, 1)}</pre>
-                <pre>{JSON.stringify(values, null, 1)}</pre> */}
               </Form>
             )}
           </Formik>
@@ -435,4 +486,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductPage2;

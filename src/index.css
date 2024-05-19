@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light only;
   color: black;
 
   font-synthesis: none;
@@ -24,10 +24,9 @@ body {
   user-select: none;
 }
 
-a[href="#"],
-a[href="/"],
-span > a {
-  color: white;
+a {
+  text-decoration: none;
+  color: black;
 }
 
 p {
@@ -39,6 +38,7 @@ h1 {
   margin: 0 auto;
 }
 
-* {
+*,
+::placeholder {
   font-family: "Lato", Arial, Helvetica, sans-serif;
 }

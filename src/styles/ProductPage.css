@@ -35,6 +35,7 @@
 .product-page .product-container form .price-qty-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .product-page .product-container form .description {
   opacity: 0.8;
@@ -52,4 +53,10 @@
   display: block;
   border-radius: 1rem;
   background-color: #f4f4f4;
+}
+
+@media (max-width: 480px) {
+  .product-page .product-container form {
+    padding: 0;
+  }
 }
