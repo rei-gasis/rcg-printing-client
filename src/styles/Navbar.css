@@ -1,0 +1,74 @@
+header {
+  z-index: 999;
+  position: relative;
+}
+header .top-block {
+  display: flex;
+  padding: 0.5rem 30px;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  min-height: 30px;
+  max-height: 30px;
+}
+header .top-block-contact a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+header .top-block-caption > a:hover {
+  transition: ease-in 0.2s;
+  color: rgba(255, 248, 240, 0.9);
+  text-decoration: underline;
+}
+header > nav {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  background-color: transparent;
+  font-weight: 700;
+}
+header > nav > .nav-brand {
+  width: 30%;
+  font-size: 1.2rem;
+  flex: 1 0 auto;
+}
+header > nav > .nav-brand > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+header > nav > .nav-brand > a > img {
+  height: 50px;
+  width: 75px;
+}
+header > nav > .nav-brand > a > span {
+  font-size: clamp(0.75rem, 0.25rem + 1.6vw, 1.25rem);
+}
+header > nav > .nav-links {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  min-width: 500px;
+}
+header > nav > .nav-links a {
+  color: white;
+}
+header > nav > .nav-links a:hover {
+  transition: ease-in 0.3s;
+  color: rgba(255, 248, 240, 0.9);
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  header .top-block-caption > a:hover {
+    transition: ease-in 0.2s;
+    color: rgba(255, 248, 240, 0.9);
+    text-decoration: underline;
+  }
+}

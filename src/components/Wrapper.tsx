@@ -11,14 +11,14 @@ type Props = {
 };
 
 const Wrapper = ({ children }: Props) => {
-  const [openBackDrop, setOpenBackDrop] = useState(false);
+  // const [openBackDrop, setOpenBackDrop] = useState(false);
 
-  const handleCloseBackDrop = () => {
-    setOpenBackDrop(false);
-  };
-  const handleOpenBackDrop = () => {
-    setOpenBackDrop(true);
-  };
+  // const handleCloseBackDrop = () => {
+  //   setOpenBackDrop(false);
+  // };
+  // const handleOpenBackDrop = () => {
+  //   setOpenBackDrop(true);
+  // };
 
   return (
     <AppProvider>

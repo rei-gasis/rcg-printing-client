@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.15.15",
     "@mui/joy": "^5.0.0-beta.32",
     "@mui/material": "^5.15.15",
@@ -22,9 +23,11 @@
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "react": "^18.2.0",
+    "react-animate-on-scroll": "^2.1.9",
     "react-awesome-reveal": "^4.2.8",
     "react-dom": "^18.2.0",
     "react-flickity-component": "^4.0.7",
+    "react-intersection-observer": "^9.10.2",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
@@ -33,6 +36,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "@types/react": "^18.2.15",
+    "@types/react-animate-on-scroll": "^2.1.8",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",

@@ -4,18 +4,18 @@ import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import site_logo from "@PublicImages/rcg-logo.svg";
 import "@Styles/Navbar.scss";
 import SidebarMenu from "./SidebarMenu";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import useMediaQueryWrapper from "../hooks/useMediaQueryWrapper";
+import AppContext from "../context/AppContext";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSideBarOpen] = useState(false);
+  const { showMenuLinks } = useContext(AppContext);
 
   const handleToggleSidebarMenu = () => {
     setIsSideBarOpen(!isSidebarOpen);
   };
-
-  // const isSmallMedia = useMediaQuery("(max-width:768px)");
 
   const { isTabletSize } = useMediaQueryWrapper();
 
@@ -45,28 +45,32 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <nav>
-        <div className="nav-brand">
-          <Link href="/">
-            <img width="50px" height="50px" src={site_logo} />{" "}
-            <span>RCG ENGRAVING SERVICES AND TRADING</span>
-          </Link>
-        </div>
-        {!isTabletSize && (
-          <div className="nav-links">
-            <Link href="/">Home</Link>
-            <Link href="/#products">Products and Services</Link>
-            <Link href="/#our-company">Our Company</Link>
-            <Link href="/#inquire-section">Contact Us</Link>
-          </div>
-        )}
-        {isTabletSize && (
-          <SidebarMenu
-            isOpen={isSidebarOpen}
-            closeMenu={handleToggleSidebarMenu}
-          />
-        )}
-      </nav>
+      {showMenuLinks && (
+        <nav>
+          {!isTabletSize && (
+            <div className="nav-brand">
+              <Link href="/">
+                <img width="50px" height="50px" src={site_logo} />{" "}
+                <span>RCG ENGRAVING SERVICES AND TRADING</span>
+              </Link>
+            </div>
+          )}
+          {!isTabletSize && (
+            <div className="nav-links">
+              <Link href="/">Home</Link>
+              <Link href="/products-services">Products and Services</Link>
+              <Link href="/#our-company">Our Company</Link>
+              <Link href="/#inquire-section">Contact Us</Link>
+            </div>
+          )}
+          {isTabletSize && (
+            <SidebarMenu
+              isOpen={isSidebarOpen}
+              closeMenu={handleToggleSidebarMenu}
+            />
+          )}
+        </nav>
+      )}
     </header>
   );
 };

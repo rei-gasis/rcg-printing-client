@@ -12,6 +12,12 @@ header {
     min-height: 30px;
     max-height: 30px;
 
+    & a[href="#"],
+    a[href="/"],
+    span > a {
+      color: white;
+    }
+
     &-contact {
       a {
         color: white;
@@ -47,6 +53,12 @@ header {
     text-decoration: none;
     background-color: transparent;
     font-weight: 700;
+
+    & a[href="#"],
+    a[href="/"],
+    span > a {
+      color: white;
+    }
 
     & > .nav-brand {
       width: 30%;

@@ -9,10 +9,15 @@
   margin-top: -30vh;
   height: inherit;
 }
+.section > .hero-section a[href="#"],
+.section > .hero-section a[href="/"],
+.section > .hero-section span > a {
+  color: white;
+}
 .section > .hero-section .hero-section-container {
   position: absolute;
   top: 40%;
-  left: 1%;
+  left: 3%;
   width: 100%;
   max-width: 1333px;
   z-index: 99;
@@ -30,7 +35,7 @@
 .section > .hero-section .hero-section-container-social-links > a {
   margin-bottom: 10px;
 }
-.section > .hero-section .hero-section-container-social-links > a > img:hover {
+.section > .hero-section .hero-section-container-social-links > a svg:hover {
   filter: invert(1);
 }
 .section > .hero-section .hero-section-container-title {
@@ -124,7 +129,7 @@
   text-align: center;
   margin-bottom: 1rem;
 }
-.section.section#prod-serv-section .prod-serv-section-container > h1 {
+.section.section#prod-serv-section .prod-serv-section-container h1 {
   margin: 3rem auto 1rem auto;
   font-size: 3.25rem;
   line-height: 1;
@@ -136,7 +141,7 @@
 .section.section#prod-serv-section .prod-serv-section-container .carousel .carousel-cell {
   width: 50%;
   height: auto;
-  margin-right: 10px;
+  margin: 20px;
   background: #fff;
   counter-increment: gallery-cell;
   border-radius: 20px;
@@ -243,6 +248,18 @@
 .section .sidebar-menu {
   background-color: black;
   text-align: right;
+}
+
+.return-to-top {
+  background-color: #9e2b25;
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.return-to-top > a {
+  color: white;
 }
 
 @media (max-width: 768px) {

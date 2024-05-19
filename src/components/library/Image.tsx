@@ -1,15 +1,25 @@
+import { ImgHTMLAttributes, SyntheticEvent } from "react";
 import { PUBLIC_IMAGES } from "../../constants/constants";
 
 type Props = {
-  fileName: string;
+  filePath: string;
   style?: React.CSSProperties;
   className?: string;
 };
 
-const Image = ({ fileName, style, className }: Props) => {
-  const filePath = PUBLIC_IMAGES + fileName;
+const Image = ({ filePath, style, className }: Props) => {
+  const onError = (e: any) => {
+    console.log(e);
+    e.target.src = "/images/not_found.png";
+  };
   return (
-    <img className={className} style={style} alt={fileName} src={filePath} />
+    <img
+      className={className}
+      style={style}
+      alt={filePath}
+      src={filePath}
+      onError={onError}
+    />
   );
 };
 

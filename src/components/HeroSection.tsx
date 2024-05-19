@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import sample_vid from "@PublicImages/sample_vid_hero.mp4";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import FacebookIcon from "@mui/icons-material/FacebookOutlined";
 import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import TocIcon from "@mui/icons-material/Toc";
 import { Link } from "@mui/material";
@@ -14,6 +14,8 @@ import HeroSectionProductCarousel from "./HeroSectionProductCarousel";
 import { Category } from "models/Category";
 import tiktok_logo from "../../public/images/tiktok-circle.svg";
 import IconTextStack from "./library/IconTextStack";
+import TikTokIcon from "@Components/TiktokIcon";
+import ScrollAnimationWrapper from "./library/ScrollAnimationWrapper";
 
 const HeroSection = () => {
   const [searchProduct, setSearchProduct] = useState<Product>({
@@ -22,19 +24,19 @@ const HeroSection = () => {
     name: "",
   });
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>();
+  // const [categories, setCategories] = useState<Category[]>();
 
   useEffect(() => {
     setProducts(_products);
 
-    setCategories(
-      uniqBy(
-        _products.map((item) => {
-          return { name: item.category, image: item.images[0] };
-        }),
-        "category"
-      )
-    );
+    // setCategories(
+    //   uniqBy(
+    //     _products.map((item) => {
+    //       return { name: item.category, image: item.images[0] };
+    //     }),
+    //     "category"
+    //   )
+    // );
   }, [_products]);
 
   useEffect(() => {
@@ -56,33 +58,35 @@ const HeroSection = () => {
 
   return (
     <div className="section">
-      <div className="hero-section">
+      <div className="hero-section" id="hero">
         <div className="hero-section-bg">
           <video width="100%" loop={true} height="100%" autoPlay muted>
             <source src={sample_vid} type="video/mp4" />
           </video>
         </div>
         <div className="hero-section-container">
-          <div className="hero-section-container-social-links">
+          <div className="hero-section-container-social-links animated fadeInLeft">
             <Link href="https://facebook.com">
-              <FacebookOutlinedIcon
+              <FacebookIcon
                 sx={{
                   fill: "black",
                   fontSize: "2rem",
-                  "&:hover": { fill: "white" },
                 }}
               />
             </Link>
             <Link href="https://tiktok.com">
-              <img
-                style={{ width: "2rem" }}
-                alt="tiktok_logo"
-                src={tiktok_logo}
-              />
+              <div
+                style={{
+                  width: "33px",
+                  height: "33px",
+                }}
+              >
+                <TikTokIcon color="black" />
+              </div>
             </Link>
           </div>
 
-          <div className="hero-section-container-title">
+          <div className="hero-section-container-title  animated fadeInUp ">
             <h4 className="caption-1">DIGITAL PRINTING SERVICE</h4>
             <h1 className="caption-main">Your One-Stop Printing Shop</h1>
             <h6 className="caption-2">
@@ -113,7 +117,7 @@ const HeroSection = () => {
               />
             </p>
           </div>
-          <div className="hero-section-container-product-carousel">
+          <div className="hero-section-container-product-carousel animated fadeInRight">
             <HeroSectionProductCarousel />
           </div>
         </div>

@@ -4,8 +4,9 @@ import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import { CONTACT_INFO } from "../constants/constants";
+import { CONTACT_INFO, PUBLIC_IMAGES } from "../constants/constants";
 import useMediaQueryWrapper from "../hooks/useMediaQueryWrapper";
+import ScrollAnimationWrapper from "./library/ScrollAnimationWrapper";
 
 const CompanySection = () => {
   const { isPhoneSize } = useMediaQueryWrapper();
@@ -15,7 +16,9 @@ const CompanySection = () => {
       <div className="our-company-container">
         <Grid container spacing={3}>
           <Grid item xs={12} md={7} lg={7} className="left-pane">
-            <h1>Our Company</h1>
+            <ScrollAnimationWrapper animateIn="fadeInUp">
+              <h1>Our Company</h1>
+            </ScrollAnimationWrapper>
             <p>
               RCG is a family-owned printing shop that started as a single stall
               in the late 80’s. The owners, Rey and Winnie Gasis, were able to
@@ -30,45 +33,48 @@ const CompanySection = () => {
               expedita ut a corrupti obcaecati explicabo cupiditate molestiae
               deleniti eligendi error debitis asperiores!
             </p>
-            <Button variant="contained" type="button" color="success">
-              Get in Touch{" "}
-              <KeyboardArrowRightRoundedIcon sx={{ translateX: "20px" }} />
-            </Button>
-            <Stack
-              spacing={5}
-              direction={isPhoneSize ? "column" : "row"}
-              alignItems={isPhoneSize ? "flex-start" : "center"}
-              justifyContent="flex-start"
-            >
+            <ScrollAnimationWrapper animateIn="fadeInUp">
+              <Button variant="contained" type="button" color="success">
+                Get in Touch{" "}
+                <KeyboardArrowRightRoundedIcon sx={{ translateX: "20px" }} />
+              </Button>
+
               <Stack
-                spacing={3}
-                direction="row"
-                alignItems="center"
-                className="contact-info"
+                spacing={5}
+                direction={isPhoneSize ? "column" : "row"}
+                alignItems={isPhoneSize ? "flex-start" : "center"}
+                justifyContent="flex-start"
               >
-                <ContactPhoneRoundedIcon />
-                <Stack direction="column">
-                  <p>Call Us Anytime</p>
-                  <p>
-                    <b>{CONTACT_INFO.phoneNumber}</b>
-                  </p>
+                <Stack
+                  spacing={3}
+                  direction="row"
+                  alignItems="center"
+                  className="contact-info"
+                >
+                  <ContactPhoneRoundedIcon />
+                  <Stack direction="column">
+                    <p>Call Us Anytime</p>
+                    <p>
+                      <b>{CONTACT_INFO.phoneNumber}</b>
+                    </p>
+                  </Stack>
+                </Stack>
+                <Stack
+                  spacing={3}
+                  direction="row"
+                  alignItems="center"
+                  className="contact-info"
+                >
+                  <EmailRoundedIcon />
+                  <Stack direction="column">
+                    <p>Email Us Anytime</p>
+                    <p>
+                      <b>{CONTACT_INFO.emailAddress}</b>
+                    </p>
+                  </Stack>
                 </Stack>
               </Stack>
-              <Stack
-                spacing={3}
-                direction="row"
-                alignItems="center"
-                className="contact-info"
-              >
-                <EmailRoundedIcon />
-                <Stack direction="column">
-                  <p>Email Us Anytime</p>
-                  <p>
-                    <b>{CONTACT_INFO.emailAddress}</b>
-                  </p>
-                </Stack>
-              </Stack>
-            </Stack>
+            </ScrollAnimationWrapper>
           </Grid>
           <Grid item xs={12} md={5} lg={5}>
             <div className="image-container">
@@ -79,9 +85,12 @@ const CompanySection = () => {
                   objectFit: "cover",
                   borderRadius: "1rem",
                 }}
-                fileName="our_company.jpg"
+                filePath={`${PUBLIC_IMAGES}our_company.jpg`}
               />
-              <div className="years-of-service">
+              <ScrollAnimationWrapper
+                animateIn="fadeInRight"
+                className="years-of-service"
+              >
                 <p>
                   30+ <br /> years
                 </p>
@@ -89,7 +98,7 @@ const CompanySection = () => {
                   of Experience in
                   <br /> Printing Services
                 </p>
-              </div>
+              </ScrollAnimationWrapper>
             </div>
           </Grid>
         </Grid>

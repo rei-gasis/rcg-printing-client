@@ -59,6 +59,7 @@ const HeroSectionProductCarousel = () => {
       showArrows={false}
       interval={4000}
       animationHandler={fadeAnimationHandler}
+      swipeable={false}
     >
       <div>
         <img src={`${PUBLIC_IMAGES}hero/1.png`} />
